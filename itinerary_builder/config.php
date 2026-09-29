@@ -7,19 +7,17 @@
  * both the database and the user are prefixed with your account name,
  * e.g. account name "tdu" → database "tdu_itinerary", user "tdu_appuser".
  */
-// LOCAL DEV COPY (XAMPP on this machine) — not the production config.
-// Uses the local `test` MySQL user/db that IT already set up in XAMPP.
 return [
-    // ── MySQL (local XAMPP) ───────────────────────────────────────────
-    'db_host' => 'localhost',
-    'db_name' => 'test',
-    'db_user' => 'test',
-    'db_pass' => 'Gtx1234*',
+    // ── MySQL (cPanel) ────────────────────────────────────────────────
+    'db_host' => 'localhost',          // almost always "localhost" on cPanel
+    'db_name' => 'CPANELUSER_tdu',     // ← change
+    'db_user' => 'CPANELUSER_tdu',     // ← change
+    'db_pass' => 'CHANGE_ME',          // ← change
 
     // ── Data imports ──────────────────────────────────────────────────
     // Required as ?key=... when running import.php (so only your team can
     // trigger a data reload). Change it to any random string.
-    'import_key' => 'local-dev-key',
+    'import_key' => 'CHANGE_ME',
 
     // ── AI prediction proxy (same values as the old server.py) ───────
     'proxy_url' => 'CHANGE_ME',

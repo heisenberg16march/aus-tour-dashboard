@@ -12,26 +12,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// ╔══════════════════════════════════════════════════════════════════════╗
-// ║  ⚠ NOT DEPLOYMENT READY — AUTH IS BYPASSED ⚠                           ║
-// ║  This flag skips ALL login + 2FA checks. It is on ONLY because the    ║
-// ║  real 2FA dependency (../2fa/totp_lib.php) does not exist in this     ║
-// ║  copy of the codebase yet. DO NOT flip this to false without first    ║
-// ║  wiring up a real ../2fa/totp_lib.php and login/session flow —        ║
-// ║  flipping it as-is will lock everyone out, not secure the app.        ║
-// ║  DO NOT treat this branch/commit as production-ready until this is   ║
-// ║  resolved. — flagged 2026-09-28                                       ║
-// ╚══════════════════════════════════════════════════════════════════════╝
-$BYPASS_AUTH_FOR_TESTING = true; // LOCAL DEV ONLY — this copy lives in C:\xampp\htdocs\varun, never deployed
+// ── TESTING ONLY: set to true to skip login + 2FA. NEVER deploy with true. ──
+$BYPASS_AUTH_FOR_TESTING = false;
 if ($BYPASS_AUTH_FOR_TESTING) {
     $_SESSION['user_name'] = $_SESSION['user_name'] ?? 'test_user';
     $IS_ADMIN = true;
-    // Release the session file lock immediately — otherwise every request
-    // (including the several parallel analytics fetches one tab screen
-    // fires at once) blocks on PHP's default session-file lock and queues
-    // up serially instead of running concurrently, turning a normally-fast
-    // page into a ~1-minute load.
-    session_write_close();
     return;
 }
 
